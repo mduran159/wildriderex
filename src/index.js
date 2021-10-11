@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Header from './components/header';
+import Header from './components/header/header';
 import Typography from '@mui/material/Typography';
-import Footer from './components/footer';
+import Footer from './components/footer/footer';
 
 ReactDOM.render(
   <React.StrictMode>

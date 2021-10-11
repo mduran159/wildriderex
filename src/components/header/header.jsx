@@ -17,7 +17,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from "@mui/material/MenuItem";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Button from '@mui/material/Button';
-import { ReactComponent as Logo } from '../Icons/logo.svg';
+import { ReactComponent as Logo } from '../../assets/Icons/logo.svg';
 import './header.scss';
 import 'flag-icon-css/css/flag-icon.min.css';
 import { Typography } from '@mui/material';
