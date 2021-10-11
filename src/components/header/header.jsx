@@ -119,68 +119,86 @@ const StyledMenu = styled((props) => (
 }));
 //#endregion Lenguage Menu
 
-const Header = (props) => {
+const Header = () => {
   //#region Const
   const theme = useTheme();
-  const [openMenuLenguage, setOpenMenuLenguage] = React.useState(null);
   const [openMenuLeft, setopenMenuLeft] = React.useState(false);
-  const [currentLenguageCode, setcurrentLenguageCode] = React.useState("us");
-  const openLenguage = Boolean(openMenuLenguage);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   //#endregion
 
   //#region Functions
-  const handleLeftMenuOpen = () => {
-    setopenMenuLeft(true);
-  };
-  const handleLeftMenuClose = () => {
-    setopenMenuLeft(false);
-  };
-  const handleLenguageMenuClick = (event) => {
-    setOpenMenuLenguage(event.currentTarget);
-  };
-  const handleLenguageMenuClose = () => {
-    setOpenMenuLenguage(null);
-  };
   const GoTo = (selectedLeftMenuItem) => {
     console.log("add code to search the new direction " + selectedLeftMenuItem)
   }
-  const changeLenguage = (lenguage) => {
-    setcurrentLenguageCode(lenguage)
-    setOpenMenuLenguage(null)
-    console.log("add code to change the lenguage to " + currentLenguageCode)
-  }
   //#endregion
 
-  //#region Resize Listener
-  React.useEffect(() => {
-    function handleResize() {
-      if(window.innerWidth>900)
-        handleLeftMenuClose();
-    }
-    window.addEventListener('resize', handleResize)
-  })
-  //#endregion Resize Listener
+  //#region Flag Button
+  function FlagButton() {
+    //#region Const
+    const [currentLenguageCode, setcurrentLenguageCode] = React.useState("us");
+    const [openMenuLenguage, setOpenMenuLenguage] = React.useState(null);
+    const openLenguage = Boolean(openMenuLenguage);
+    //#endregion
 
-  return (
-    <Box>
-      <CssBaseline />
-      <AppBar open={openMenuLeft}>
-        <Toolbar >
-          { isMobile ?
-            (<>
+    //#region Functions
+    const handleLenguageMenuClick = (event) => {
+      setOpenMenuLenguage(event.currentTarget);
+    };
+    const handleLenguageMenuClose = () => {
+      setOpenMenuLenguage(null);
+    };
+    const changeLenguage = (lenguage) => {
+      setcurrentLenguageCode(lenguage)
+      setOpenMenuLenguage(null)
+      console.log("add code to change the lenguage to " + currentLenguageCode)
+    }
+   //#endregion
+    
+    return <Box>
+              <IconButton  className="flagBtn" onClick={handleLenguageMenuClick}>
+                <KeyboardArrowDownIcon />
+                <span className={`flag-icon flag-icon-${currentLenguageCode}`}></span>
+              </IconButton>
+              <StyledMenu anchorEl={openMenuLenguage} open={openLenguage} onClose={handleLenguageMenuClose} >
+                {lenguageOption.map((x, i) => {
+                      return <MenuItem key={i} onClick={handleLenguageMenuClose} onClick={() => changeLenguage(x.code)}>
+                              <Button className="flagMenuItem">
+                                <span className={`flag-icon flag-icon-${x.code}`}></span>
+                                <span className="lenguageName">{x.displayName}</span>
+                              </Button>
+                            </MenuItem>
+                            
+                })}
+              </StyledMenu>
+            </Box>
+  }
+  //#endregion Flag Button
+  
+  //#region Menu Left
+  function MenuLeft({openMenuLeft}){
+    //#region Functions
+    const handleLeftMenuOpen = () => {
+      setopenMenuLeft(true);
+    };
+    const handleLeftMenuClose = () => {
+      setopenMenuLeft(false);
+    };
+    //#endregion
+    
+    //#region Resize Listener
+    React.useEffect(() => {
+      function handleResize() {
+        if(window.innerWidth>900)
+          handleLeftMenuClose();
+      }
+      window.addEventListener('resize', handleResize)
+    })
+    //#endregion Resize Listener
+    
+    return  <Box>
               <IconButtonMenu className="menuIcon" onClick={handleLeftMenuOpen} open={openMenuLeft}>
                 <MenuIcon />
               </IconButtonMenu>
-              <Logo className="logo"/>
-              { 
-                (openMenuLeft && window.innerWidth<450) ? null :
-                  <IconButton  className="flagBtn" onClick={handleLenguageMenuClick}>
-                    <KeyboardArrowDownIcon />
-                    <span className={`flag-icon flag-icon-${currentLenguageCode}`}></span>
-                  </IconButton> 
-              }
-                
               <Menuleft anchor="left" open={openMenuLeft} onClose={handleLeftMenuClose} onOpen={handleLeftMenuOpen} >
                 <Box className="drawerMenuHeader">
                   <Button className="closeMenuBtn" onClick={handleLeftMenuClose}>
@@ -197,6 +215,20 @@ const Header = (props) => {
                   ))}
                 </List>
               </Menuleft>
+            </Box>
+  }
+  //#endregion Menu Left
+
+  return (
+    <Box>
+      <CssBaseline />
+      <AppBar open={openMenuLeft}>
+        <Toolbar >
+          { isMobile ?
+            (<>
+              <MenuLeft openMenuLeft={openMenuLeft} />
+              <Logo className="logo"/>
+              { (openMenuLeft && window.innerWidth<450) ? null : <FlagButton /> }
             </>) : (<>
               <Logo className="logo"/>
               <Box className="headerOptions">
@@ -205,29 +237,10 @@ const Header = (props) => {
                            {x.displayName}
                          </Button>
                 })}
-                <IconButton className="flagBtn" onClick={handleLenguageMenuClick}>
-                  <KeyboardArrowDownIcon />
-                  <span className={`flag-icon flag-icon-${currentLenguageCode}`}></span>
-                </IconButton>
+               <FlagButton />
               </Box>
             </>)
           }
-          <StyledMenu
-              id="demo-customized-menu"
-              anchorEl={openMenuLenguage}
-              open={openLenguage}
-              onClose={handleLenguageMenuClose}
-          >
-            {lenguageOption.map((x, i) => {
-                  return <MenuItem key={i} onClick={handleLenguageMenuClose} onClick={() => changeLenguage(x.code)}>
-                           <Button className="flagMenuItem">
-                            <span className={`flag-icon flag-icon-${x.code}`}></span>
-                            <span className="lenguageName">{x.displayName}</span>
-                           </Button>
-                         </MenuItem>
-                        
-            })}
-          </StyledMenu>
         </Toolbar>
       </AppBar>
     </Box>
