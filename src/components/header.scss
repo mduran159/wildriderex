@@ -1,0 +1,76 @@
+
+.flagBtn .flag-icon {
+    width: 1.2em;
+    height: 1.2em;
+}
+.flagBtn{
+    justify-content: flex-end !important;
+}
+.flagMenuItem{
+    justify-content: center-end !important;
+}
+.lenguageName{
+    margin-left: 6px;
+}
+.root {
+    flex-grow: 1
+}
+.menuIcon{
+    width: 2.3em;
+    height: 2.3em;
+    color: white !important;
+    justify-content: flex-start !important;
+}
+.menuBtn {
+    width: 100%;
+    white-space: nowrap;
+    color: white !important;
+    margin: 0px 5px 0px 5px !important;
+}
+@media (min-width: 900px) and (max-width: 1040px){
+    .menuBtn{
+        width: max-content;
+    }
+}
+.closeMenuBtn {
+    flex-basis: max-content;
+    flex-grow: 1;
+    justify-content: flex-start !important;
+    width: max-width;
+    color: rgba(0, 0, 0, 0.87) !important;
+}
+.drawerMenuHeader{
+    display: flex;
+}
+@media (min-width: 600px){
+    .drawerMenuHeader{
+        height: 64px;
+    }
+}
+@media (max-width: 600px){
+    .drawerMenuHeader{
+        height: 56px;
+    }
+}
+
+.drawerMenuHeaderButton{
+    width: 100%;
+    display: flex !important;
+    justify-content: flex-start !important;
+}
+.headerOptions {
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+}
+@media (min-width: 900px){
+    .logo{
+        padding-right: 3%;
+        margin-left: 2em;
+    }
+}
+@media (max-width: 900px){
+    .logo{
+        flex-grow: 1;
+    }
+}
